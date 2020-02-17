@@ -28,8 +28,10 @@ $main-color: black;
       outline: none;
     }
 
-    &:focus ~ .form-input-label {
-      @include shrinkLabel();
+    &:focus, &:not([value='']) {
+      ~ .form-input-label {
+        @include shrinkLabel();
+      }
     }
   }
 
