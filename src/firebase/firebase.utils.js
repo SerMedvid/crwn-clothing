@@ -33,12 +33,24 @@ export const createUserProfileDocument = async (userAuth, additioanlData) => {
           ...additioanlData
       })
     } catch (error) {
-        console.log('erro creating user', error.message);
+        console.log('error creating user', error.message);
     }
   }
 
   return userRef;
-}
+};
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  return await batch.commit()
+};
 
 firebase.initializeApp(config);
 
